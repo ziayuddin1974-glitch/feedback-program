@@ -1,0 +1,19 @@
+name: Compile and run feedback program
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-feedback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run feedback.c
+        run: |
+          gcc -std=c11 -Wall -Wextra -Werror feedback.c -o feedback
+          ./feedback
+          grep -F 'I like this class; it is very useful to me.' feedback.txt
+          grep -F 'Tier 1, Tier 2, and Tier 3 are separated.' feedback.txt
+          grep -F 'I like every class because they are easy to understand.' feedback.txt
+          grep -F 'Thank you.' feedback.txt
